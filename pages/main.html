@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!--
+        Everato Home Page
+        - Uses Tailwind CSS for styling
+        - Responsive navigation bar
+        - Modern footer with links and social icons
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="/public/assets/logo.webp" type="image/webp">
+    <title>Everato</title>
+</head>
+
+<body class="bg-gradient-to-br from-[#161b22] via-[#23272e] to-[#1f2937] min-h-screen text-white">
+    <div class="container mx-auto px-4">
+        <!-- Header & Navigation -->
+        <header class="py-6">
+            <nav class="flex items-center justify-between">
+                <a href="/pages/trash/main.html" class="flex items-center gap-2">
+                    <img src="/public/assets/logo.webp" alt="Everato Logo" class="w-8 h-8 rounded-full">
+                    <h1 class="font-bold text-2xl tracking-tight">Everato</h1>
+                </a>
+                <ul class="flex items-center gap-6 text-base font-medium">
+                    <li><a href="/pages/main.html" class="hover:text-cyan-400 transition">Home</a></li>
+                    <li><a href="/about" class="hover:text-cyan-400 transition">About</a></li>
+                    <li><a href="/contact" class="hover:text-cyan-400 transition">Contact</a></li>
+                    <li id="user"></li>
+                </ul>
+            </nav>
+        </header>
+        <!-- Main Content -->
+        <main id="main" class="min-h-[60vh] flex flex-col items-center justify-center py-12">
+            <div>
+                <h2 class="text-3xl font-bold mb-4">Welcome to Everato</h2>
+                <p class="text-lg opacity-80 mb-2">This is the main content of the home page.</p>
+                <p class="text-base opacity-60">Feel free to explore our site and discover more!</p>
+                <!-- Fixed Create Event button markup and logic -->
+                <button class="pt-5 hover:scale-105" id="btnCreateEvent" onclick="createEvent()">
+                    <span class="text-blue-500 border border-black bg-transparent rounded-lg p-2">Create Event</span>
+                </button>
+            </div>
+            <div id="events" class="m-5"></div>
+        </main>
+        <!-- Footer -->
+        <footer class="border-t border-gray-800 pt-6 pb-4 mt-12">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex gap-4">
+                    <a href="/privacy" class="hover:text-cyan-400 text-sm">Privacy Policy</a>
+                    <a href="/terms" class="hover:text-cyan-400 text-sm">Terms of Service</a>
+                </div>
+                <div class="flex gap-4">
+                    <a href="https://twitter.com/" target="_blank" aria-label="Twitter" class="hover:text-cyan-400">
+                        <svg class="w-5 h-5 inline" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M22.46 6c-.77.35-1.6.59-2.47.7a4.3 4.3 0 0 0 1.88-2.37 8.59 8.59 0 0 1-2.72 1.04A4.28 4.28 0 0 0 16.11 4c-2.36 0-4.28 1.92-4.28 4.29 0 .34.04.67.11.99A12.13 12.13 0 0 1 3.15 5.13a4.28 4.28 0 0 0 1.32 5.72c-.7-.02-1.36-.21-1.94-.53v.05c0 2.01 1.43 3.68 3.33 4.06-.35.1-.72.16-1.1.16-.27 0-.53-.03-.78-.07.53 1.65 2.07 2.85 3.9 2.88A8.6 8.6 0 0 1 2 19.54a12.13 12.13 0 0 0 6.56 1.92c7.88 0 12.2-6.53 12.2-12.2 0-.19-.01-.38-.02-.57A8.7 8.7 0 0 0 24 4.59a8.59 8.59 0 0 1-2.54.7z" />
+                        </svg>
+                    </a>
+                    <a href="https://github.com/everato-industries/everato" target="_blank" aria-label="GitHub"
+                        class="hover:text-cyan-400">
+                        <svg class="w-5 h-5 inline" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.93.58.11.79-.25.79-.56v-2.02c-3.2.7-3.87-1.54-3.87-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.74-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.45.11-3.02 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.57.23 2.73.11 3.02.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.41-5.27 5.7.42.36.79 1.08.79 2.18v3.24c0 .31.21.67.8.56A10.51 10.51 0 0 0 23.5 12c0-6.27-5.23-11.5-11.5-11.5z" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="text-xs opacity-70">&copy; 2025 Everato</div>
+            </div>
+        </footer>
+    </div>
+</body>
+<script type="module">
+    import { users } from '../../internal/db/temp/user.js';
+
+    // --- USER NAV LOGIC ---
+    function getLoggedInUser() {
+        return localStorage.getItem('everato_user');
+    }
+
+    function renderUserNav() {
+        const userNav = document.getElementById('user');
+        const username = getLoggedInUser();
+        if (username) {
+            userNav.innerHTML = `
+                <span class="text-sm font-semibold px-3 py-1 rounded bg-cyan-900/30 text-cyan-300">${username}</span>
+                <button id="logoutBtn" class="ml-2 text-xs text-red-400 hover:text-red-600 underline">Logout</button>
+            `;
+            document.getElementById('logoutBtn').onclick = () => {
+                localStorage.removeItem('everato_user');
+                renderUserNav();
+            };
+        } else {
+            userNav.innerHTML = `<a href="/pages/login_page.html" class="hover:text-cyan-400">Login</a>`;
+        }
+    }
+    renderUserNav();
+    window.addEventListener('storage', function (e) {
+        if (e.key === 'everato_user') renderUserNav();
+    });
+
+    // Create Event button logic
+    document.getElementById('btnCreateEvent').addEventListener('click', function () {
+        if (!getLoggedInUser()) {
+            alert('Please log in to create an event.');
+            return;
+        }
+        window.location.href = '/pages/create_event.html';
+    });
+
+    // --- EVENTS LOGIC ---
+    async function fetchEvents() {
+        try {
+            const response = await fetch('/internal/db/temp/events.json');
+            if (!response.ok) throw new Error('404 Not Found');
+            const events = await response.json();
+            const eventsContainer = document.getElementById('events');
+            const loggedInUser = getLoggedInUser();
+
+            // Render events
+            if (!Array.isArray(events) || events.length === 0) {
+                eventsContainer.innerHTML = '<p class="text-gray-400">No events available.</p>';
+                return;
+            }
+            eventsContainer.innerHTML = events.map(event => {
+                // Only show Edit button if logged in user is the event admin
+                const showEdit = loggedInUser && event.admin && loggedInUser === event.admin;
+                return `
+                    <div class="bg-gray-800 p-4 rounded-lg mb-4">
+                        <h3 class="text-xl font-semibold">${event.name}</h3>
+                        <p class="text-gray-400">${event.description}</p>
+                        <p class="text-sm text-gray-500">Date: ${new Date(event.date).toLocaleDateString()}</p>
+                        <p class="text-sm text-gray-500">Location: ${event.location}</p>
+                        <button class="mt-2 bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-600 transition"
+                            onclick="viewEvent('${event.id}')">View Details</button>
+                        <button class="${showEdit ? '' : 'hidden'} mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+                            onclick="editEvent('${event.id}')">Edit</button>
+                    </div>
+                `;
+            }).join('');
+        } catch (error) {
+            console.error('Error fetching events:', error);
+            document.getElementById('events').innerHTML = '<p class="text-red-500">Error loading events.</p>';
+        }
+    }
+
+    // Expose viewEvent and editEvent globally for inline onclick
+    window.viewEvent = function(id) {
+        alert('View details for event: ' + id);
+    };
+    window.editEvent = function(id) {
+        window.location.href = `/pages/admin.html?id=${id}`;
+    };
+
+    // Fetch events on page load if user is logged in
+    if (getLoggedInUser()) {
+        fetchEvents();
+    } else {
+        document.getElementById('events').innerHTML = '<p class="text-gray-400">Please log in to view events.</p>';
+    }
+</script>
+
+</html>

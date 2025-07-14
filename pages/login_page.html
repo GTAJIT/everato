@@ -13,7 +13,7 @@
     <!-- Tailwind CSS for utility-first styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Favicon for browser tab -->
-    <link rel="icon" href="/public/assets/logo.webp" type="image/x-icon">
+    <link rel="icon" href="/public/assets/logo.webp" type="image/x-icon"> <!--image/webp-->
     <!-- GSAP for advanced animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"></script>
@@ -202,12 +202,9 @@
         z-index: 1;
     }
 </style>
-<script>
-    // Demo users for login/signup logic
-    const users = [
-        { userId: 1, userName: "gtajit", userEmail: "one@one.one", userPassword: "ONE.one@2005" },
-        { userId: 2, userName: "jit", userEmail: "jitmukherjee.dev@gmail.com", userPassword: "one@2005" },
-    ];
+<script type="module">
+    import {users} from '../../internal/db/temp/user.js';
+
 
     document.addEventListener('DOMContentLoaded', function () {
         // --- DOM ELEMENTS ---
@@ -431,8 +428,9 @@
             }
             iconPasswordLogin.innerHTML = '&#x2713;';
             iconPasswordLogin.classList.add('text-green-500');
+            await localStorage.setItem('everato_user', user.userName);
             showNotification('Login successful!', 'text-green-400');
-            setTimeout(() => window.location.href = '/pages/home_page.html', 1000);
+            setTimeout(() => window.location.href = '/pages/main.html', 1000);
             btn2Login.disabled = false;
             
 
@@ -509,7 +507,7 @@
             iconUsername.innerHTML = '&#x2713;';
             iconUsername.classList.add('text-green-500');
             showNotification('Username is available! Account created.', 'text-green-400');
-            setTimeout(() => window.location.href = '/pages/home_page.html', 1000);
+            setTimeout(() => window.location.href = '/pages/main.html', 1000);
             btn3.disabled = false;
         });
 

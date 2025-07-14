@@ -1,0 +1,25 @@
+[
+    {
+        "id": "evt1",
+        "name": "Everato Launch Party",
+        "description": "Join us for the official launch of Everato! Food, drinks, and networking.",
+        "date": "2025-08-01",
+        "location": "Everato HQ, Kolkata",
+        "admin": "gtajit"
+    },
+    {
+        "id": "evt2",
+        "name": "Hackathon 2025",
+        "description": "A 24-hour coding marathon. Prizes for top teams!",
+        "date": "2025-09-15",
+        "location": "Online",
+        "admin": "jit"
+    },
+    {
+        "id": "evt3",
+        "name": "Community Meetup",
+        "description": "Meet the Everato team and fellow users. Share feedback and ideas.",
+        "date": "2025-10-10",
+        "location": "Salt Lake, Kolkata"
+    }
+]
