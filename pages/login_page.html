@@ -1,86 +1,592 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/public/css/styles.css" />
-        <link rel="stylesheet" href="/public/css/login.css" />
-        <title>Everato - Login</title>
-    </head>
-    <body class="bg-primary min-h-screen flex items-center justify-center">
-        <main class="w-full max-w-sm mx-auto">
-            <div class="bg-secondary rounded-lg shadow-lg p-8">
-                <form id="login-form" class="space-y-6">
-                    <div class="mb-4 text-center">
-                        <h1 class="text-3xl font-bold fg-secondary mb-1">
-                            Login
-                        </h1>
-                        <p class="fg-primary/60 text-sm">
-                            Please enter your email and password to login.
-                        </p>
+
+<head>
+    <!--
+        Everato Login/Signup Page
+        - Uses Tailwind CSS for styling
+        - Uses GSAP for cursor and trailing box effects
+        - Favicon set for branding
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tailwind CSS for utility-first styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Favicon for browser tab -->
+    <link rel="icon" href="/public/assets/logo.webp" type="image/x-icon">
+    <!-- GSAP for advanced animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"></script>
+    <title>Everato</title>
+</head>
+
+<body
+    class="lg:cursor-none overflow-hidden bg-[url('/public/assets/bg.webp')] backdrop-brightness-[60%] backdrop-blur-[100px] min-h-screen bg-no-repeat bg-cover bg-center">
+    <!--
+        Main container for the login/signup page.
+        Uses flexbox for centering and responsiveness.
+
+        Trailing cursor effect using GSAP.
+        Four colored gradient boxes follow the mouse for a unique UI.
+        These are purely decorative and do not interfere with user interaction.
+    -->
+    <div id="cursor"></div> <!-- Custom cursor element to follow mouse movement -->
+    <div id="Wrap" class="fixed w-screen h-screen pointer-events-none top-50 left-50 z-10 hidden lg:block">
+        <div
+            class="FollowBox bg-gradient-to-br from-cyan-400 via-fuchsia-500 to-violet-700 shadow-2xl border-none rounded-[50px]">
+        </div>
+        <div
+            class="FollowBox bg-gradient-to-br from-fuchsia-500 via-cyan-400 to-violet-700 shadow-xl border-none rounded-[50px]">
+        </div>
+        <div
+            class="FollowBox bg-gradient-to-br from-violet-700 via-cyan-400 to-fuchsia-500 shadow-lg border-none rounded-[50px]">
+        </div>
+        <div
+            class="FollowBox bg-gradient-to-br from-cyan-400 via-violet-700 to-fuchsia-500 shadow-md border-none rounded-[50px]">
+        </div>
+    </div>
+    <div class="flex items-center justify-center min-h-screen px-2 min-w-screen">
+        <!--
+            Main card for login/signup.
+            Responsive, centered, and styled for modern look.
+        -->
+        <main
+            class="cursor-default z-20 w-full max-w-lg sm:max-w-md lg:max-w-xl bg-[#161b22]/95 rounded-2xl shadow-2xl p-6 sm:p-8 lg:p-10">
+            <div class="cursor-default flex items-center justify-center flex-col w-full gap-3">
+                <!-- Welcome message -->
+                <div class="flex flex-col items-start w-full mb-6">
+                    <span class="opacity-70 text-white text-xl sm:text-2xl lg:text-3xl font-semibold mb-1">Welcome to
+                        Everato!</span>
+                    <span class="opacity-60 text-white text-base sm:text-lg lg:text-xl">Your one-stop solution for all
+                        your needs</span>
+                </div>
+                <!-- Email Step -->
+                <form id="form-1" class="w-full">
+                    <div id="input-1" class="flex flex-col items-end w-full">
+                        <div class="flex flex-col w-full">
+                            <label class="text-cyan-300 font-bold text-base flex items-center gap-1" for="emailInput">
+                                Enter your email
+                            </label>
+                            <div class="flex gap-1 mb-2 items-center w-full">
+                                <span id="icon-email" class="font-bold text-lg text-yellow-500">&#x279E;</span>
+                                <input id="emailInput"
+                                    class="bg-transparent border-gray-400 outline-none text-white w-full py-2 px-1 text-base"
+                                    type="email" autocomplete="email" required placeholder="email.." />
+                            </div>
+                        </div>
+                        <div class="flex w-full">
+                            <button id="btn-1" type="submit"
+                                class="w-full bg-transparent border border-green-500 text-green-500 px-4 py-2 rounded-lg mt-2 hover:border-green-600 hover:text-green-600 hover:scale-105 transition duration-300 text-base">Continue</button>
+                        </div>
                     </div>
-                    <div>
-                        <label for="email" class="block mb-1 font-medium">
-                            Email
-                        </label>
-                        <input
-                            type="text"
-                            id="email"
-                            name="email"
-                            required
-                            class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none"
-                        />
-                    </div>
-                    <div>
-                        <label for="password" class="block mb-1 font-medium">
-                            Password
-                        </label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            required
-                            class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none"
-                        />
-                    </div>
-                    <button type="submit" class="btn">Login</button>
                 </form>
-                <p class="mt-6 text-center text-sm fg-primary/70">
-                    Don't have an account?
-                    <a href="/register" class="text-accent hover:underline"
-                        >Register here</a
-                    >.
-                </p>
+                <!-- Signup Password Step -->
+                <form id="form-2" class="w-full hidden">
+                    <div id="input-2" class="flex flex-col items-end w-full">
+                        <div class="flex flex-col w-full">
+                            <label class="text-cyan-300 font-bold text-base flex items-center gap-1" for="passInput">
+                                Create your password
+                            </label>
+                            <div class="flex gap-1 mb-2 items-center w-full">
+                                <span id="icon-password" class="font-bold text-lg text-yellow-500">&#x279E;</span>
+                                <input id="passInput"
+                                    class="bg-transparent border-gray-400 outline-none text-white w-full py-2 px-1 text-base"
+                                    type="password" autocomplete="new-password" required placeholder="password.." />
+                                <button type="button" id="toggle-signup-pass"
+                                    class="ml-2 text-gray-400 hover:text-cyan-300" aria-label="Show password">
+                                    Show
+                                </button>
+                            </div>
+                            <!-- Password live checks for user feedback -->
+                            <div id="password-checks" class="text-xs text-gray-400 space-y-1 mb-2">
+                                <div id="check-len" class="flex items-center gap-1"><span>•</span> At least 8 characters
+                                </div>
+                                <div id="check-upper" class="flex items-center gap-1"><span>•</span> Uppercase letter
+                                </div>
+                                <div id="check-lower" class="flex items-center gap-1"><span>•</span> Lowercase letter
+                                </div>
+                                <div id="check-num" class="flex items-center gap-1"><span>•</span> Number</div>
+                                <div id="check-sym" class="flex items-center gap-1"><span>•</span> Symbol (@, _, -, !)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex w-full">
+                            <button id="btn-2" type="submit"
+                                class="w-full bg-transparent border border-green-500 text-green-500 px-4 py-2 rounded-lg mt-2 hover:border-green-600 hover:text-green-600 hover:scale-105 transition duration-300 text-base">Continue</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- Login Password Step -->
+                <form id="form-2-login" class="w-full hidden">
+                    <div id="input-2-login" class="flex flex-col items-end w-full">
+                        <div class="flex flex-col w-full">
+                            <label class="text-cyan-300 font-bold text-base flex items-center gap-1"
+                                for="passInputLogin">
+                                Enter your password
+                            </label>
+                            <div class="flex gap-1 mb-2 items-center w-full">
+                                <span id="icon-password-login" class="font-bold text-lg text-yellow-500">&#x279E;</span>
+                                <input id="passInputLogin"
+                                    class="bg-transparent border-gray-400 outline-none text-white w-full py-2 px-1 text-base"
+                                    type="password" autocomplete="current-password" required placeholder="password.." />
+                                <button type="button" id="toggle-login-pass"
+                                    class="ml-2 text-gray-400 hover:text-cyan-300" aria-label="Show password">
+                                    Show
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex w-full">
+                            <button id="btn-2-login" type="submit"
+                                class="w-full bg-transparent border border-green-500 text-green-500 px-4 py-2 rounded-lg mt-2 hover:border-green-600 hover:text-green-600 hover:scale-105 transition duration-300 text-base">Continue</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- Username Step -->
+                <form id="form-3" class="w-full hidden">
+                    <div id="input-3" class="flex flex-col items-end w-full">
+                        <div class="flex flex-col w-full">
+                            <label class="text-cyan-300 font-bold text-base flex items-center gap-1"
+                                for="usernameInput">
+                                Enter your username
+                            </label>
+                            <div class="flex gap-1 mb-2 items-center w-full">
+                                <span id="icon-username" class="font-bold text-lg text-yellow-500">&#x279E;</span>
+                                <input id="usernameInput"
+                                    class="bg-transparent border-gray-400 outline-none text-white w-full py-2 px-1 text-base"
+                                    type="text" autocomplete="username" required placeholder="username.." />
+                            </div>
+                        </div>
+                        <div class="flex w-full">
+                            <button id="btn-3" type="submit"
+                                class="w-full bg-transparent border border-green-500 text-green-500 px-4 py-2 rounded-lg mt-2 hover:border-green-600 hover:text-green-600 hover:scale-105 transition duration-300 text-base">Continue</button>
+                        </div>
+                        <!-- Username suggestions appear here if needed -->
+                        <div id="username-suggestions" class="mt-1 text-sm text-gray-400"></div>
+                    </div>
+                </form>
             </div>
+            <!-- Notification area for all alerts and feedback -->
+            <div id="notification-div" aria-live="polite" class="w-full text-center mt-4 text-base"></div>
         </main>
-        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"></script>
-        <script src="/public/js/script.js"></script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                document
-                    .getElementById("login-form")
-                    .addEventListener("submit", async function (e) {
-                        e.preventDefault();
-                        const form = e.target;
-                        const data = {
-                            email: form.email.value,
-                            password: form.password.value,
-                        };
-                        const response = await fetch("/api/v1/auth/login", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify(data),
-                        });
-                        if (response.ok) {
-                            window.location.href = "/";
-                        } else {
-                            // Optionally handle errors here
-                            alert("Login failed");
-                        }
-                    });
+    </div>
+</body>
+<style>
+    /* Trailing cursor box styles */
+    .FollowBox {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 64px;
+        height: 64px;
+        opacity: 0.7;
+        filter: blur(1px) saturate(1.2);
+        will-change: transform;
+        pointer-events: none;
+        border-radius: 50px;
+        transition: box-shadow 0.1s;
+    }
+
+    .FollowBox:nth-child(1) {
+        z-index: 4;
+    }
+
+    .FollowBox:nth-child(2) {
+        z-index: 3;
+    }
+
+    .FollowBox:nth-child(3) {
+        z-index: 2;
+    }
+
+    .FollowBox:nth-child(4) {
+        z-index: 1;
+    }
+</style>
+<script>
+    // Demo users for login/signup logic
+    const users = [
+        { userId: 1, userName: "gtajit", userEmail: "one@one.one", userPassword: "ONE.one@2005" },
+        { userId: 2, userName: "jit", userEmail: "jitmukherjee.dev@gmail.com", userPassword: "one@2005" },
+    ];
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // --- DOM ELEMENTS ---
+        // Get references to all interactive elements for login/signup steps
+        const iconEmail = document.getElementById('icon-email');
+        const iconPassword = document.getElementById('icon-password');
+        const iconPasswordLogin = document.getElementById('icon-password-login');
+        const iconUsername = document.getElementById('icon-username');
+        const passInput = document.getElementById('passInput');
+        const passInputLogin = document.getElementById('passInputLogin');
+        const toggleSignupPass = document.getElementById('toggle-signup-pass');
+        const toggleLoginPass = document.getElementById('toggle-login-pass');
+        const checkLen = document.getElementById('check-len');
+        const checkUpper = document.getElementById('check-upper');
+        const checkLower = document.getElementById('check-lower');
+        const checkNum = document.getElementById('check-num');
+        const checkSym = document.getElementById('check-sym');
+        const suggestionsDiv = document.getElementById('username-suggestions');
+        const notificationDiv = document.getElementById('notification-div');
+        const emailInput = document.getElementById('emailInput');
+        const usernameInput = document.getElementById('usernameInput');
+        const form1 = document.getElementById('form-1');
+        const form2 = document.getElementById('form-2');
+        const form2Login = document.getElementById('form-2-login');
+        const form3 = document.getElementById('form-3');
+        const btn1 = document.getElementById('btn-1');
+        const btn2 = document.getElementById('btn-2');
+        const btn2Login = document.getElementById('btn-2-login');
+        const btn3 = document.getElementById('btn-3');
+
+        // --- NOTIFICATION UTILS ---
+        // Show notification message in the notification area
+        function showNotification(msg, color = "text-red-400") {
+            notificationDiv.innerHTML = `<span class="${color}">${sanitize(msg)}</span>`;
+            setTimeout(() => { notificationDiv.innerHTML = ""; }, 3500);
+        }
+        // Sanitize output to prevent XSS
+        function sanitize(str) {
+            return String(str).replace(/[<>&"']/g, c => ({
+                '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#39;'
+            })[c]);
+        }
+
+        // --- USERNAME SUGGESTION UTILS ---
+        // Check if a username is already taken
+        function isUsernameTaken(name) {
+            return users.some(u => u.userName.toLowerCase() === name.toLowerCase());
+        }
+        // Suggest alternative usernames if the desired one is taken
+        function suggestUsernames(base) {
+            const suggestions = [];
+            let i = 1;
+            while (suggestions.length < 2 && i < 100) {                  // control the number of suggestions and avoid infinite loop
+                if (suggestions.length >= 2) break; // Limit to 2 suggestions
+                let candidate = base + i;
+                if (!isUsernameTaken(candidate)) suggestions.push(candidate);
+                else {
+                    candidate = base + '_' + i;
+                    if (!isUsernameTaken(candidate)) suggestions.push(candidate);
+                    else {
+                        candidate = base + Math.floor(Math.random() * 90 + 10);
+                        if (!isUsernameTaken(candidate)) suggestions.push(candidate);
+                    }
+                }
+                i++;
+            }
+            return suggestions;
+        }
+
+        // --- INITIAL FOCUS ---
+        // Autofocus the email input when the page loads
+        emailInput.focus();
+
+        // --- FORM DISPLAY UTILS ---
+        // Helper to show one form and hide others, then focus the relevant input
+        function showForm(formToShow, inputToFocus, ...formsToHide) {
+            formToShow.classList.remove('hidden');
+            formsToHide.forEach(f => f.classList.add('hidden'));
+            setTimeout(() => inputToFocus.focus(), 10); // Wait for DOM update
+        }
+
+        // --- PASSWORD TOGGLE ---
+        // Toggle password visibility for signup and login forms
+        function togglePassword(input, btn) {
+            if (input.type === "password") {
+                input.type = "text";
+                btn.textContent = "Hide";
+            } else {
+                input.type = "password";
+                btn.textContent = "Show";
+            }
+            setTimeout(() => input.focus(), 10);
+        }
+        toggleSignupPass.addEventListener('click', () => togglePassword(passInput, toggleSignupPass));
+        toggleLoginPass.addEventListener('click', () => togglePassword(passInputLogin, toggleLoginPass));
+
+        // --- PASSWORD LIVE CHECKS ---
+        // Provide live feedback on password requirements as the user types
+        passInput.addEventListener('input', function () {
+            const val = passInput.value;
+            checkLen.classList.toggle('text-green-400', val.length >= 8);
+            checkLen.classList.toggle('text-gray-400', val.length < 8);
+            checkUpper.classList.toggle('text-green-400', /[A-Z]/.test(val));
+            checkUpper.classList.toggle('text-gray-400', !/[A-Z]/.test(val));
+            checkLower.classList.toggle('text-green-400', /[a-z]/.test(val));
+            checkLower.classList.toggle('text-gray-400', !/[a-z]/.test(val));
+            checkNum.classList.toggle('text-green-400', /[0-9]/.test(val));
+            checkNum.classList.toggle('text-gray-400', !/[0-9]/.test(val));
+            checkSym.classList.toggle('text-green-400', /[@_\-!]/.test(val));
+            checkSym.classList.toggle('text-gray-400', !/[@_\-!]/.test(val));
+        });
+
+        // --- USERNAME SUGGESTIONS ---
+        // Show username suggestions if the entered username is taken
+        usernameInput.addEventListener('input', function () {
+            const val = usernameInput.value.trim();
+            suggestionsDiv.innerHTML = '';
+            if (!val || val.length < 3) return;
+            if (isUsernameTaken(val)) {
+                suggestionsDiv.innerHTML = `<span class="text-red-400">Username is taken. Suggestions: </span>`;
+                const sugg = suggestUsernames(val);
+                sugg.forEach(s => {
+                    const btn = document.createElement('button');
+                    btn.textContent = s;
+                    btn.type = "button";
+                    btn.className = "ml-2 px-2 py-1 rounded bg-gray-700 text-cyan-300 hover:bg-cyan-900 transition";
+                    btn.onclick = () => {
+                        usernameInput.value = s;
+                        suggestionsDiv.innerHTML = '';
+                        usernameInput.focus();
+                    };
+                    suggestionsDiv.appendChild(btn);
+                });
+            } else {
+                suggestionsDiv.innerHTML = `<span class="text-green-400">Username is available!</span>`;
+            }
+        });
+
+        // --- EMAIL STEP LOGIC ---
+        // Handles the first step: email input and flow decision (login or signup)
+        form1.addEventListener('submit', function (e) {
+            e.preventDefault();
+            btn1.disabled = true;
+            const email = emailInput.value.trim().toLowerCase();
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            const user = users.find(u => u.userEmail.toLowerCase() === email);
+
+            iconEmail.classList.remove('text-yellow-500', 'text-green-500', 'text-red-500');
+            if (!email || !emailPattern.test(email)) {
+                iconEmail.innerHTML = '&#x2717;';
+                iconEmail.classList.add('text-red-500');
+                emailInput.focus();
+                showNotification('Please enter a valid email.');
+                btn1.disabled = false;
+                return;
+            }
+
+            btn1.classList.add('hidden');
+            if (user) {                                              // login
+                // If user exists, show login password form
+                iconEmail.innerHTML = '&#x2713;';
+                iconEmail.classList.add('text-green-500');
+                showForm(form2Login, passInputLogin, form2, form3);
+            } else {                                                 // signup
+                // If user does not exist, show signup password form
+                iconEmail.innerHTML = '&#x2717;';
+                iconEmail.classList.add('text-red-500');
+                showForm(form2, passInput, form2Login, form3);
+                showNotification('Switched to signup, account not found.');
+            }
+            btn1.disabled = false;
+        });
+
+        // --- SIGNUP PASSWORD STEP LOGIC ---
+        // Handles password validation and transition to username step for signup
+        form2.addEventListener('submit', function (e) {
+            e.preventDefault();
+            btn2.disabled = true;
+            const value = passInput.value;
+            iconPassword.classList.remove('text-yellow-500', 'text-green-500', 'text-red-500');
+            const checks = [
+                value.length >= 8,
+                /[A-Z]/.test(value),
+                /[a-z]/.test(value),
+                /[0-9]/.test(value),
+                /[@_\-!]/.test(value),
+                !value.includes(' ')
+            ];
+            if (!checks.every(Boolean)) {
+                iconPassword.innerHTML = '&#x2717;';
+                iconPassword.classList.add('text-red-500');
+                passInput.focus();
+                showNotification('Password must be at least 8 characters, include uppercase, lowercase, number, symbol (@, _, -, !), and no spaces.');
+                btn2.disabled = false;
+                return;
+            }
+
+            btn2.classList.add('hidden');
+            iconPassword.innerHTML = '&#x2713;';
+            iconPassword.classList.add('text-green-500');
+            showForm(form3, usernameInput, form2Login);                //// !! logic need to change !! ////
+            btn2.disabled = false;
+        });
+
+        // --- LOGIN PASSWORD STEP LOGIC ---
+        // Handles login password validation and successful login redirect
+        form2Login.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            btn2Login.disabled = true;
+            const value = passInputLogin.value;
+            iconPasswordLogin.classList.remove('text-yellow-500', 'text-green-500', 'text-red-500');
+            const email = emailInput.value.trim().toLowerCase();
+            const user = users.find(u => u.userEmail.toLowerCase() === email);
+            if (!(user && user.userPassword === value)) {
+                iconPasswordLogin.innerHTML = '&#x2717;';
+                iconPasswordLogin.classList.add('text-red-500');
+                passInputLogin.focus();
+                showNotification('Password is incorrect.');
+                btn2Login.disabled = false;
+                return;
+            }
+            iconPasswordLogin.innerHTML = '&#x2713;';
+            iconPasswordLogin.classList.add('text-green-500');
+            showNotification('Login successful!', 'text-green-400');
+            setTimeout(() => window.location.href = '/pages/home_page.html', 1000);
+            btn2Login.disabled = false;
+            
+
+            // Uncomment below for actual login API call //
+
+            // const form = e.target;
+            // const data = {
+            //     email: form.email.value,
+            //     password: form.password.value,
+            // };
+            // const response = await fetch("/api/v1/auth/login", {
+            //     method: "POST",
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //     },
+            //     body: JSON.stringify(data),
+            // });
+            // if (response.ok) {
+            //     window.location.href = "/";
+            // } else {
+            //     // Optionally handle errors here
+            //     alert("Login failed");
+            // }
+        });
+
+        // --- USERNAME STEP LOGIC ---
+        // Handles username validation and account creation for signup
+        form3.addEventListener('submit', function (e) {
+            e.preventDefault();
+            btn3.disabled = true;
+            const username = usernameInput.value.trim();
+            iconUsername.classList.remove('text-yellow-500', 'text-green-500', 'text-red-500');
+            suggestionsDiv.innerHTML = '';
+            const usernameValid = !users.some(u => u.userName.toLowerCase() === username.toLowerCase());
+
+            // Username must be at least 3 characters
+            if (username.length < 3) {
+                showNotification('Please enter a valid username (min 3 chars).');
+                iconUsername.innerHTML = '&#x2717;';
+                iconUsername.classList.add('text-red-500');
+                usernameInput.focus();
+                btn3.disabled = false;
+                return;
+            }
+            // Username cannot contain spaces
+            if (username.includes(' ')) {
+                showNotification('Username cannot contain spaces.');
+                iconUsername.innerHTML = '&#x2717;';
+                iconUsername.classList.add('text-red-500');
+                usernameInput.focus();
+                btn3.disabled = false;
+                return;
+            }
+            // Username must match allowed pattern
+            if (!/^[a-z0-9_@-]+$/i.test(username)) {
+                showNotification('Username can only contain letters, numbers, underscores, @ or -.');
+                iconUsername.innerHTML = '&#x2717;';
+                iconUsername.classList.add('text-red-500');
+                usernameInput.focus();
+                btn3.disabled = false;
+                return;
+            }
+            // Username must be unique
+            if (!usernameValid) {
+                showNotification('Username already exists. Please choose a different username.');
+                iconUsername.innerHTML = '&#x2717;';
+                iconUsername.classList.add('text-red-500');
+                usernameInput.focus();
+                btn3.disabled = false;
+                return;
+            }
+
+            // Success: account created
+            iconUsername.innerHTML = '&#x2713;';
+            iconUsername.classList.add('text-green-500');
+            showNotification('Username is available! Account created.', 'text-green-400');
+            setTimeout(() => window.location.href = '/pages/home_page.html', 1000);
+            btn3.disabled = false;
+        });
+
+        // --- Cursor Effects Section ---
+        // Rotating custom cursor (if #cursor element exists)
+        // Not used in current markup, but left for future extension
+        const cursor = document.getElementById('cursor');
+        if (cursor) {
+            gsap.set(cursor, { xPercent: -50, yPercent: -50, rotate: 0 });
+        }
+
+        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+        let lastX = mouseX, lastY = mouseY, lastAngle = 0;
+        window.addEventListener('mousemove', e => {
+            // Calculate mouse position and angle for rotation
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            const dx = mouseX - lastX;
+            const dy = mouseY - lastY;
+            const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+            // Animate cursor position and rotation
+            gsap.to(cursor, {
+                x: mouseX,
+                y: mouseY,
+                rotate: angle,
+                duration: 0.35,
+                ease: "power2.out"
             });
-        </script>
-    </body>
-</html>
+            lastX = mouseX;
+            lastY = mouseY;
+            lastAngle = angle;
+        });
+        // Animate cursor scale on mouse down/up for feedback
+        window.addEventListener('mousedown', () => {
+            gsap.to(cursor, { scale: 0.8, duration: 0.15 });
+        });
+        window.addEventListener('mouseup', () => {
+            gsap.to(cursor, { scale: 1, duration: 0.15 });
+        });
+
+        // --- GSAP Trailing Colored Boxes Effect ---
+        // Only on large screens
+        if (window.innerWidth >= 1024) {
+            let FollowBox = "#Wrap .FollowBox";
+            gsap.set(FollowBox, {
+                xPercent: -50,
+                yPercent: -50,
+                scale: 0
+            });
+            window.addEventListener("mousemove", (e) => {
+                gsap.to(FollowBox, {
+                    duration: 0.5,
+                    overwrite: "auto",
+                    x: e.clientX,
+                    y: e.clientY,
+                    stagger: 0.15,
+                    ease: "none"
+                });
+                let TL = gsap.timeline({
+                    defaults: { duration: 0.5, ease: "none" }
+                });
+                TL.to(FollowBox, {
+                    scale: 1,
+                    overwrite: "auto",
+                    stagger: { amount: 0.15, from: "start", ease: "none" }
+                });
+                TL.to(
+                    FollowBox,
+                    {
+                        overwrite: "auto",
+                        scale: 0,
+                        stagger: { amount: 0.15, from: "end", ease: "none" }
+                    },
+                    "<+=2.5"
+                );
+            });
+        }
+
+    });
+</script>
